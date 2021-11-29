@@ -25,6 +25,7 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
   <li>thxm_r : Thomas Roy</li>
   <li>florianbrrl : Florian Barrali</li>
   <li>ceryuz : Enzo Rocamora</li>
+  <li>ALonelyDuck : Clément Colin</li>
 </ul>
 
 # Softwares used
