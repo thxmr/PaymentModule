@@ -12,3 +12,8 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
   <li>As a customer I would like to be able to make a budget i would not like to exceed when buying recipe</li>
   <li>As a customer, I would like to be able to see my past expenses on the website and to download invoices.</li>
 </ol>
+
+# Structures
+
+Front end app : built-in react app
+Backend : setup few files
