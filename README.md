@@ -19,6 +19,10 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
 
 </ol>
 
+# Usernames correspondances
+
+<ul>
+  <li>thxm_r : Thomas Roy</li>
 # Structures
 
 Front end app : built-in react app\
