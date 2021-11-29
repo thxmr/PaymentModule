@@ -11,6 +11,11 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
   <li>As a customer, I would like to be able to opt-out of the automated month-to-month subscription or pause it for several months.</li>
   <li>As a customer I would like to be able to make a budget i would not like to exceed when buying recipe</li>
   <li>As a customer, I would like to be able to see my past expenses on the website and to download invoices.</li>
+  <li>As a customer, I want to pay with my mastercard to do my purchase.</li>
+  <li>As a customer, I want to pay with my Visa to do my purchase.</li>
+  <li>As a customer, I want to pay with Paypal to do my purchase.</li>
+  <li>As a customer, I want to pay with my ApplePay to do my purchase.</li>
+
 </ol>
 
 # Structures
