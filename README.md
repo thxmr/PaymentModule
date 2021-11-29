@@ -29,6 +29,7 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
 # Softwares used
 
 Development : IntelliJ IDEA 
+Comunication : Discord
 
 # Structures
 
