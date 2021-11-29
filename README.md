@@ -25,6 +25,10 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
   <li>thxm_r : Thomas Roy</li>
 </ul>
 
+# Softwares used
+
+Development : IntelliJ IDEA 
+
 # Structures
 
 Front end app : built-in react app\
