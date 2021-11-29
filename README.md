@@ -1,5 +1,6 @@
 # PaymentModule
 
+//TODO CHANGE THOSE SHIT\
 Those are the user stories (sorted by order of matter) we are supposed to follow in order to develop the Payment module :
 <ol>
   <li>As a customer, I would like to purchase a monthly subscription to receive new recipes from the chief every month</li>
