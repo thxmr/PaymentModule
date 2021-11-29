@@ -23,6 +23,7 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
 
 <ul>
   <li>thxm_r : Thomas Roy</li>
+  <li>florianbrrl : Florian Barrali</li>
 </ul>
 
 # Softwares used
