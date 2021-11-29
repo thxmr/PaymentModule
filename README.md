@@ -20,5 +20,5 @@ Those are the user stories (sorted by order of matter) we are supposed to follow
 
 # Structures
 
-Front end app : built-in react app
+Front end app : built-in react app\
 Backend : setup few files
