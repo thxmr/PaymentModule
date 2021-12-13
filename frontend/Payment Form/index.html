@@ -7,214 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="scripts/imask.min.js"></script>
     <script src="scripts/paymentform.js"></script>
+    <link rel="stylesheet" href="style/style.css">
     <title>Payment Form</title>
-    <style>
-        body {
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            font-weight:700;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            background-color: gray;
-            color: gray;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-
-        #paymentform {
-            background-color: white;
-            width: 40%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #paymentmod {
-            width: 90%;
-            height: 25%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            margin: 5%;
-        }
-
-        #paymentmod>div {
-            border: 1px solid gray;
-        }
-
-        #visa,
-        #paypal,
-        #applepay {
-            content: "";
-            width: 8vw;
-            height: 7vw;
-        }
-
-        #visa {
-            background-image: url("img/visa.png");
-            background-size: 100%;
-            background-position: center center;
-            background-repeat: no-repeat;
-        }
-
-        #paypal {
-            background-image: url("img/paypal.png");
-            background-size: 100%;
-            background-position: center center;
-            background-repeat: no-repeat;
-        }
-
-        #applepay {
-            background-image: url("img/applepay.png");
-            background-size: 100%;
-            background-position: center center;
-            background-repeat: no-repeat;
-        }
-
-        #infoscarte,
-        #infospaypal,
-        #infosapple {
-            border: 1px solid gray;
-            border-radius: 1em;
-            width: 90%;
-            height: 40%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 1% 1% 0px 1%;
-            margin-bottom: 3%;
-        }
-
-        form {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        input {
-            border: 1px solid gray;
-            border-radius: 0.4em;
-            margin: 1%;
-            padding: 8px;
-        }
-
-        input[id="cardnumber"],
-        input[id="nom"] {
-            width: 100%;
-        }
-
-        input[id="dateexp"],
-        input[id="cvc"] {
-            width: 90%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            background-color: #ff5e00;
-            color: white;
-        }
-
-        label {
-            text-align: center;
-            width: 100%;
-            display: block;
-            height: 50%;
-        }
-
-        .row {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items:center;
-            width: 100%;
-        }
-
-        .col {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items:center;
-            width: 100%;
-        }
-
-        .selected {
-            border: 1px solid #FF5F1F !important;
-        }
-
-        #infospaypal {
-            background-color: yellow;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            height: 20px;
-            width: 30%;
-            padding: 1% 1% 1% 1%;
-            color: black;
-            text-decoration: none;
-        }
-
-        #infosapple {
-            background-color: white;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            height: 30px;
-            width: 30%;
-            padding: 1% 1% 1% 1%;
-            color: black;
-            text-decoration: none;
-        }
-
-        #thanks {
-            width: 40%;
-            display: flex;
-            background-color: white;
-            padding: 5vw;
-        }
-        hr{
-            width:100px;
-        }
-        a:visited{
-            color:gray;
-        }
-    </style>
-    <script>
-        function changeForm(e) {
-            const visa = document.getElementById("visa");
-            const paypal = document.getElementById("paypal");
-            const apple = document.getElementById("applepay");
-
-            const visaform = document.getElementById("cardform");
-            const paypalform = document.getElementById("paypalform");
-            const appleform = document.getElementById("appleform");
-
-            visa.classList.remove("selected");
-            paypal.classList.remove("selected");
-            apple.classList.remove("selected");
-            e.classList.add("selected");
-
-            if (e == visa) {
-                visaform.hidden = false;
-                paypalform.hidden = true;
-                appleform.hidden = true;
-
-            } else if (e == paypal) {
-                visaform.hidden = true;
-                paypalform.hidden = false;
-                appleform.hidden = true;
-            } else if (e == apple) {
-                visaform.hidden = true;
-                paypalform.hidden = true;
-                appleform.hidden = false;
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -225,22 +19,19 @@
             <div id="applepay" onclick="changeForm(this);"></div>
         </div>
         <div id="cardform">
-            <label for="infos" style="font-size:24px;">Paiement avec carte bancaire</label>
+            <label for="infos">Paiement avec carte bancaire</label>
             <div id="infoscarte">
                 <form action="POST">
                     <label for="cardnumber">Numéro de carte bancaire</label><br />
-                    <input type="text" name="cardnumber" id="cardnumber" placeholder="1234 5678 9012 3456" required
-                        pattern="[0-9]*" inputmode="numeric" />
+                    <input type="text" name="cardnumber" id="cardnumber" placeholder="1234 5678 9012 3456" required pattern="[0-9]*" inputmode="numeric" />
                     <div class="row">
                         <div class="col">
                             <label for="dateexp">Date d'expiration</label><br />
-                            <input type="text" name="dateexp" id="dateexp" placeholder="MM/AAAA" required
-                                pattern="[0-9]*" inputmode="numeric" />
+                            <input type="text" name="dateexp" id="dateexp" placeholder="MM/AAAA" required pattern="[0-9]*" inputmode="numeric" />
                         </div>
                         <div class="col">
                             <label for="cvc">CVC</label>
-                            <input type="text" name="cvc" id="cvc" placeholder="3 numéros au dos de la carte" required
-                                pattern="[0-9]*" inputmode="numeric" />
+                            <input type="text" name="cvc" id="cvc" placeholder="3 numéros au dos de la carte" required pattern="[0-9]*" inputmode="numeric" />
                         </div>
                     </div>
                     <label for="nom">Nom du titulaire de la carte</label>
@@ -252,14 +43,14 @@
             </div>
         </div>
         <div id="paypalform">
-            <label for="infos" style="font-size:24px;">Paiement par PayPal</label><br />
+            <label for="infos">Paiement par PayPal</label><br />
             <a href="https://www.paypal.com/" id="infospaypal">
                 <p>Payer avec</p>
                 <img src="img/paypal.png" alt="paypal" width=100 height=30 />
             </a>
         </div>
         <div id="appleform">
-            <label for="infos" style="font-size:24px;">Paiement par Apple Pay</label><br />
+            <label for="infos">Paiement par Apple Pay</label><br />
             <a href="https://www.apple.com/" id="infosapple">
                 <p>Payer avec</p>
                 <img src="img/applepay.png" alt="applepay" width=100 height=40 />
@@ -274,15 +65,15 @@
                     <p>Achat Terminé</p>
                 </div>
             </div>
-            <div class="row" style="border:1px solid gray;border-radius:2em;padding:3vw 0 3vw 0;">
-                <div class="col" style="border:1px solid gray;border-radius:2em;padding:1vw;margin-left:4vw;">
+            <div class="row" id="detailsrow">
+                <div class="col" id="detailscol">
                     <p>Commande #"insérer n° commande"</p>
                     <hr/>
                     <p>"Insérer méthode de paiement"</p>
                     <hr/>
                     <p>"Insérer date et heure du paiement</p>
                 </div>
-                <div class="col" style="margin-left:4vw;">
+                <div class="col" id="facturecol">
                     <div class="row">
                         <img src="img/pdf.jpg" alt="pdf" width=100 height=100>
                     </div>

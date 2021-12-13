@@ -57,3 +57,33 @@ window.onload = function () {
    
     
     };
+
+    function changeForm(e) {
+        const visa = document.getElementById("visa");
+        const paypal = document.getElementById("paypal");
+        const apple = document.getElementById("applepay");
+
+        const visaform = document.getElementById("cardform");
+        const paypalform = document.getElementById("paypalform");
+        const appleform = document.getElementById("appleform");
+
+        visa.classList.remove("selected");
+        paypal.classList.remove("selected");
+        apple.classList.remove("selected");
+        e.classList.add("selected");
+
+        if (e == visa) {
+            visaform.hidden = false;
+            paypalform.hidden = true;
+            appleform.hidden = true;
+
+        } else if (e == paypal) {
+            visaform.hidden = true;
+            paypalform.hidden = false;
+            appleform.hidden = true;
+        } else if (e == apple) {
+            visaform.hidden = true;
+            paypalform.hidden = true;
+            appleform.hidden = false;
+        }
+    }
