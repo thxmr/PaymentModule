@@ -47,7 +47,41 @@ app.get('/invoices/:client_id', async function (req, res) {
     }
 });
 
+app.post('/invoice', async function (req, res) {
+    // Initialization
+    let data = [];
+
+    // Parsing data from the body request
+    data['subType'] = req.body.subscription_type;
+    data['address'] = req.body.address;
+    data['payment_method'] = req.body.payment_method;
+    data['client_id'] = req.body.client_id
+
     
+
+    // Prepare the request
+    let SQL = `
+    INSERT INTO invoices (subscription_type, client_id, address, payment_method, date) 
+    VALUES ('${data['subType']}', '${data['client_id']}', '${data['address']}', '${data['payment_method']}', '${new Date().toISOString().slice(0, 10)}')
+    RETURNING transaction_id;
+    `
+    console.log(SQL);
+
+    // Send the request
+    const pgRes = await db.query(SQL);
+    if(pgRes.rows.length > 0) {
+        console.log('Invoice added');
+        // Fetch ID from SQL request
+        let id = pgRes.rows[0].transaction_id;
+            // Response to the client
+        return res.status(200).send({'transaction_id' : id})
+    }
+    else {
+        console.log(`Error in  SQL : ${pgRes}`)
+        return res.status(500).send({'error' : pgRes})
+    }
+});
+   
 app.get('/subscription/:id', async function (req, res) {
     // Initialization
     let SQL = ""
