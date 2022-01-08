@@ -1,0 +1,120 @@
+/*TABLETS*/
+
+@media only screen and (min-width:321px) and (max-width:768px) {
+    * {
+        background-color: red;
+    }
+
+    ::placeholder {
+        font-size: 1.25vw;
+    }
+
+    #paymentform {
+        width: 60%;
+    }
+
+    #paymentmod {
+        width: 54vw;
+    }
+
+    label[for="infos"] {
+        font-size: 2vw;
+    }
+
+    #infoscarte,
+    #infospaypal,
+    #infosapple {
+        width: 45vw;
+    }
+
+    label {
+        font-size: 1.4vw;
+    }
+
+    input[id="cardnumber"],
+    input[id="nom"],
+    input[type="submit"] {
+        width: 44vw;
+    }
+
+    input[type="submit"] {
+        font-size: 1.5vw;
+    }
+
+    input[id="dateexp"],
+    input[id="cvc"] {
+        width: 20vw;
+    }
+
+    #visa,
+    #paypal,
+    #applepay {
+        width: 10vw;
+        height: 9vw;
+    }
+
+    #infospaypal {
+        width: 30vw;
+        font-size: 1.5vw;
+    }
+
+    #infosapple {
+        width: 30vw;
+        font-size: 1.5vw;
+    }
+}
+
+/*PHONES*/
+
+@media only screen and (max-width:320px) {
+
+    #paymentform {
+        width: 80%;
+    }
+
+    ::placeholder {
+        font-size: 1.75vw;
+    }
+
+    #paymentmod {
+        width: 72vw;
+    }
+
+    #visa,
+    #paypal,
+    #applepay {
+        width: 15vw;
+        height: 14vw;
+    }
+
+    label[for="infos"] {
+        font-size: 2vw;
+    }
+
+    #infoscarte,
+    #infospaypal,
+    #infosapple {
+        width: 65vw;
+        padding: 1.7vw;
+    }
+
+    label {
+        font-size: 1.8vw;
+    }
+
+    input[id="cardnumber"],
+    input[id="nom"],
+    input[type="submit"] {
+        width: 64vw;
+    }
+
+    input[id="dateexp"],
+    input[id="cvc"] {
+        width: 29vw;
+    }
+
+    input[type="submit"]{
+        font-size: 3vw;
+
+    }
+}
