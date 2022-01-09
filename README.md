@@ -16,10 +16,12 @@ Comunication : Discord
 
 ## Development environment
 
-For this project we used Visual Studio Code as an integrated development environment, but you can use another one if you'd like because we didn't use any extensions, packages, and plugins exlusive to it.
+For this project we used **Visual Studio Code** as an integrated development environment, but you can use another one if you'd like because we didn't use any extensions, packages, and plugins exlusive to it.
+
 -You can download it from the Microsoft website https://aka.ms/visualstudiocode, the version is not important.
 
-IntelliJ IDEA was also used for javascript.
+**IntelliJ IDEA** was also used for javascript.
+
 -You can download it from this website https://www.jetbrains.com/fr-fr/idea/download/, the version is not important.
 
 ### Technologies used
