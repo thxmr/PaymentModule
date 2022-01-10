@@ -108,7 +108,7 @@ Install [PostgreSQL](https://www.postgresql.org/download/) from the official web
     CREATE TABLE subscriptions (
         subscription_type int NOT NULL,
         subName varchar(80) NOT NULL,
-        price numeric(3,2) NOT NULL
+        price numeric NOT NULL
     );
     
     CREATE TABLE invoices (
@@ -123,8 +123,8 @@ Install [PostgreSQL](https://www.postgresql.org/download/) from the official web
 -For testing purposes you can add some values to the `subscriptions` table :
 
     INSERT INTO subscriptions
-    	VALUES (1, 'Student', 4.99);
-    	VALUES (2, 'Basic', 9.99);
+    	VALUES (1, 'Student', 4.99),
+    	VALUES (2, 'Basic', 9.99),
     	VALUES (3, 'Premium', 14.99);
 
 ### Setting up the node environnent
