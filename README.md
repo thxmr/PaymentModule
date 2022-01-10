@@ -124,8 +124,8 @@ Install [PostgreSQL](https://www.postgresql.org/download/) from the official web
 
     INSERT INTO subscriptions
     	VALUES (1, 'Student', 4.99),
-    	VALUES (2, 'Basic', 9.99),
-    	VALUES (3, 'Premium', 14.99);
+    	(2, 'Basic', 9.99),
+    	(3, 'Premium', 14.99);
 
 ### Setting up the node environnent
 
