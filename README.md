@@ -1,5 +1,12 @@
 
 # Project details
+## Users stories
+As a user when it came to checkout, i want to be able to select différent methods
+
+As a user ask for all my invoices
+
+As a user i want to be able to get détail about on specific invoice
+
 ## Working developpers
 
 <ul>
