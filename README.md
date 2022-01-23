@@ -87,6 +87,41 @@ It will install all the necessaries packages and dependencies required for the p
 
 # Setup the environnent for the backend
 
+### Bypass
+
+For Front-End devs or the other groups, installing PostgreSQL and setting up the API is not the best way to do things.
+
+To fix that, Enzo hosted on a private server a database with the API for remote access.
+
+To connect to the remote API :
+
+-Open the `index.php` file located in the `\frontend\Payment Form` folder.
+
+-Then locate the `$clientPayment` variable on line 6 :
+
+    $clientPayment = new Client([
+        // Base URI, (url de l'API)
+        'base_uri' => 'localhost:3002/',
+        'timeout' => 2.0,
+    ]);
+
+-Replace the `base_uri` from `localhost:3002` to `http://152.228.163.113:3002/`, it should look like that:
+
+    $clientPayment = new Client([
+        // Base URI, (url de l'API)
+        'base_uri' => 'http://152.228.163.113:3002/',
+        'timeout' => 2.0,
+    ]);
+    
+-Done.
+
+You can now run the index.php page without having to install PostgresSQL or node.
+
+To reverse the change simply change base_uri back to `localhost:3002`.
+
+Beware that everytime you submit a form when testing the payment page it will send and receive data from Enzo's Server.
+Please do not make it crash or it will impact service for everyone connecting to it.
+
 ### Setting up PostgreSQL
 
 Install [PostgreSQL](https://www.postgresql.org/download/) from the official website and make you use the 14.X version for compatibility reasons.
