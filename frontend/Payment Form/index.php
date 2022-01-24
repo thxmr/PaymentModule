@@ -1,4 +1,4 @@
-<?php 
+<?php
 require '../vendor/autoload.php';
 
 use GuzzleHttp\Client;
@@ -52,7 +52,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
     }
-    
+
+    $name = $_POST['nom'];
+    $cvc = $_POST['cvc'];
+    $cvcPattern = "/^[0-9]{3}"
+    $namePattern = "/^([A-Z][a-z]+([-]{1}[A-Z][a-z]+||[A-Z][a-z]+)([ ]{1}||[ ]{1}de[ ]{1}||[ ]{1}d')[A-Z][a-z]+)$/";
+    if (!pregmatch($namePattern,$name))
+    {
+      $error = 'Nom invalide';
+    }
+    else {
+      echo 'valide';
+    }
+    if(!pregmatch($cvcPattern,$cvc))
+    {
+      $error = "cvc invalide";
+    }
+    else{
+      echo 'cvc valide';
+    }
+
     $number = $_POST['cardnumber'];
 
     //$number="1738 2929 2828 4637"; //Valide
@@ -71,10 +90,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         /* Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org *
         * This code has been released into the public domain */
         $number=preg_replace('/\D/', '', $number);
-    
+
         $number_length=strlen($number);
         $parity=$number_length % 2;
-        
+
         $total=0;
         for ($i=0; $i<$number_length; $i++) {
             $digit=$number[$i];
@@ -86,7 +105,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         $total+=$digit;
         }
-        
+
         if ($total % 10 == 0) {
             print("Valide");
         } else {
@@ -139,7 +158,7 @@ try {
             <div id="paypal" onclick="changeForm(this);"></div>
             <div id="applepay" onclick="changeForm(this);"></div>
         </div>
-        <?php 
+        <?php
         if(isset($error)){
             echo $error;
             exit();
