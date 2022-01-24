@@ -17,16 +17,93 @@ $clientClient = new Client([
 $subId = $_GET['subscription_type'];
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $_POST['dateexp'] = "05/22";
     $_POST['payment_method'] = 1;
-    print_r($_POST);
+    $date = $_POST['dateexp'];
+
+    //Tested on the 01/22
+    //$date = "01/22"; //Valide
+    //$date = "01/21"; //Faux
+    //$date = "12/21"; //Faux
+    //$date = "01/25"; //Valide
+
+    //Check if month between 1-12 and format mm/yy
+    if(!preg_match("/^(0[1-9]|1[012])\/[0-9]{2}$/", $date)) {
+        $error = "Format date Invalide";
+    } else {
+        $min = date_format(new \DateTime(),"m/y");
+        $min = DateTime::createFromFormat("m/y", $min);
+
+        $max = date_format(new \DateTime(),"m/y");
+        $max = DateTime::createFromFormat("m/y", $max);
+        $max->add(new DateInterval("P3Y"));
+
+        $date = date_create_from_format('m/y', $date);
+
+        //Check if card is not expired
+        if ($date < $min) {
+            $error = "Carte expirée";
+        }
+        else {
+            //Check if expiration date isn't greater dans 3 years
+            if ($date > $max) {
+                $error = "Carte valide plus de 3 ans";
+            } else {
+                print("Valide");
+            }
+        }
+    }
+    
+    $number = $_POST['cardnumber'];
+
+    //$number="1738 2929 2828 4637"; //Valide
+    //$number="1738 F929 2828 4637"; //Faux
+    //$number="1738292928284637"; //Valide
+    //$number="FREN"; //Faux
+    //$number="1738-2929-2828-4637"; //Valide
+    //$number="1738/2929/2828/4637"; //Valide
+
+    $reg = '/^[0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}$/';
+
+    if ((preg_match($reg, $number)) || (preg_match('/^[0-9]+$/', $number))) {
+        $number=str_replace(array(' ', '-', '/'), '', $number);
+        $number=intval($number);
+
+        /* Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org *
+        * This code has been released into the public domain */
+        $number=preg_replace('/\D/', '', $number);
+    
+        $number_length=strlen($number);
+        $parity=$number_length % 2;
+        
+        $total=0;
+        for ($i=0; $i<$number_length; $i++) {
+            $digit=$number[$i];
+            if ($i % 2 == $parity) {
+                $digit*=2;
+                if ($digit > 9) {
+                    $digit-=9;
+                }
+            }
+        $total+=$digit;
+        }
+        
+        if ($total % 10 == 0) {
+            print("Valide");
+        } else {
+            $error = "Carte non valide";
+        }
+    } else {
+        $error = "Format carte de crédit invalide";
+    }
+
     $data = ['subscription_type' => $subId, 'address' => $_POST['address'], 'payment_method' => $_POST['payment_method'], 'client_id' => $_POST['client_id'] ];
 
     $response = $clientPayment->request('POST', '/invoice', ['headers' => ['Content-Type' => 'application/json'], 'body' => json_encode($data)]);
     $body = get_object_vars(json_decode($response->getBody()));
-
-    header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
-    exit();
+    if (!isset($error)) {
+        header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
+        exit();
+    }
 }
 
 try {
