@@ -54,17 +54,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
     $name = $_POST['nom'];
-    $cvc = $_POST['cvc'];
-    $cvcPattern = "/^[0-9]{3}"
     $namePattern = "/^([A-Z][a-z]+([-]{1}[A-Z][a-z]+||[A-Z][a-z]+)([ ]{1}||[ ]{1}de[ ]{1}||[ ]{1}d')[A-Z][a-z]+)$/";
-    if (!pregmatch($namePattern,$name))
+
+    if (!preg_match($namePattern, $name))
     {
       $error = 'Nom invalide';
     }
     else {
       echo 'valide';
     }
-    if(!pregmatch($cvcPattern,$cvc))
+
+    $cvc = $_POST['cvc'];
+    $cvcPattern = "/^[0-9]{3}$/";
+
+    if(!preg_match($cvcPattern, $cvc))
     {
       $error = "cvc invalide";
     }
