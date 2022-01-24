@@ -15,6 +15,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
+app.all('*', function(req, res, next){
+    console.log('🔵 called route ' + req.originalUrl);
+    next();
+});
 app.get('/', async function (req, res) {
     console.log("Reçu")
     return res.send('Hello world');
@@ -103,8 +107,6 @@ app.post('/invoice', async function (req, res) {
     data['payment_method'] = req.body.payment_method;
     data['client_id'] = req.body.client_id
 
-
-
     // Prepare the request
     let SQL = `
     INSERT INTO invoices (subscription_type, client_id, address, payment_method, date)
@@ -119,7 +121,8 @@ app.post('/invoice', async function (req, res) {
         console.log('Invoice added');
         // Fetch ID from SQL request
         let id = pgRes.rows[0].transaction_id;
-            // Response to the client
+        // api 3001 routes / => sub id & client_id & success 
+        // Response to the client
         return res.status(200).send({'transaction_id' : id})
     }
     else {
