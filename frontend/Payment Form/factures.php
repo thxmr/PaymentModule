@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 
 $clientPayment = new Client([
     // Base URI, (url de l'API)
-    'base_uri' => 'localhost:3002',
+    'base_uri' => 'http://152.228.163.113:3002/',
     'timeout' => 2.0,
 ]);
 $clientClient = new Client([
