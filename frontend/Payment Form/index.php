@@ -161,11 +161,11 @@ try {
                     <div class="row">
                         <div class="col">
                             <label for="dateexp">Date d'expiration</label><br />
-                            <input type="text" name="dateexp" id="dateexp" placeholder="MM/AAAA" pattern="[0-9]*" inputmode="numeric" />
+                            <input type="text" name="dateexp" id="dateexp" placeholder="MM/AA" pattern="[0-9]{2}\/[0-9]{2}" inputmode="numeric" />
                         </div>
                         <div class="col">
                             <label for="cvc">CVC</label>
-                            <input type="text" name="cvc" id="cvc" placeholder="3 numéros au dos de la carte" required pattern="[0-9]*" inputmode="numeric" />
+                            <input type="text" name="cvc" id="cvc" placeholder="3 numéros au dos de la carte" required pattern="[0-9]{3}" inputmode="numeric" />
                         </div>
                     </div>
                     <label for="nom">Nom du titulaire de la carte</label>
