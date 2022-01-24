@@ -171,8 +171,12 @@ Then in Visual Studio Code, open the project and locate `index.js` that is in th
 Now in the Terminal you want to enter the following command :
 
     npm install
+    
+Test the environement by doing : 
 
-You can now run the node with this command :
+    `npm test`
+    
+After the test passed, you can run the node with this command :
 
     node .\index.js
     
