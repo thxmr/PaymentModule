@@ -1,144 +1,128 @@
 <?php
-require '../vendor/autoload.php';
+    require '../vendor/autoload.php';
 
-use GuzzleHttp\Client;
+    use GuzzleHttp\Client;
 
-$clientPayment = new Client([
-    // Base URI, (url de l'API)
-    'base_uri' => 'localhost:3002',
-    'timeout' => 2.0,
-]);
-$clientClient = new Client([
-    'base_uri' => 'localhost:3000',
-    'timeout' => 2.0
-]);
+    $clientPayment = new Client([
+        // Base URI, (url de l'API)
+        'base_uri' => 'localhost:3002',
+        'timeout' => 2.0,
+    ]);
+    $clientClient = new Client([
+        'base_uri' => 'localhost:3000',
+        'timeout' => 2.0
+    ]);
 
-// Add the ClientModule API
-$subId = $_GET['subscription_type'];
+    // Add the ClientModule API
+    $subId = $_GET['subscription_type'];
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $_POST['payment_method'] = 1;
-    $date = $_POST['dateexp'];
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $_POST['payment_method'] = 1;
+        $date = $_POST['dateexp'];
 
-    //Tested on the 01/22
-    //$date = "01/22"; //Valide
-    //$date = "01/21"; //Faux
-    //$date = "12/21"; //Faux
-    //$date = "01/25"; //Valide
+        //Check if month between 1-12 and format mm/yy
+        if(!preg_match("/^(0[1-9]|1[012])\/[0-9]{2}$/", $date)) {
+            $error = "Format date Invalide";
+        } else {
+            $min = date_format(new \DateTime(),"m/y");
+            $min = DateTime::createFromFormat("m/y", $min);
 
-    //Check if month between 1-12 and format mm/yy
-    if(!preg_match("/^(0[1-9]|1[012])\/[0-9]{2}$/", $date)) {
-        $error = "Format date Invalide";
-    } else {
-        $min = date_format(new \DateTime(),"m/y");
-        $min = DateTime::createFromFormat("m/y", $min);
+            $max = date_format(new \DateTime(),"m/y");
+            $max = DateTime::createFromFormat("m/y", $max);
+            $max->add(new DateInterval("P3Y"));
 
-        $max = date_format(new \DateTime(),"m/y");
-        $max = DateTime::createFromFormat("m/y", $max);
-        $max->add(new DateInterval("P3Y"));
+            $date = date_create_from_format('m/y', $date);
 
-        $date = date_create_from_format('m/y', $date);
-
-        //Check if card is not expired
-        if ($date < $min) {
-            $error = "Carte expirée";
-        }
-        else {
-            //Check if expiration date isn't greater dans 3 years
-            if ($date > $max) {
-                $error = "Carte valide plus de 3 ans";
-            } else {
-                print("Valide");
+            //Check if card is not expired
+            if ($date < $min) {
+                $error = "Carte expirée";
             }
-        }
-    }
-
-    $name = $_POST['nom'];
-    $namePattern = "/^([A-Z][a-z]+([-]{1}[A-Z][a-z]+||[A-Z][a-z]+)([ ]{1}||[ ]{1}de[ ]{1}||[ ]{1}d')[A-Z][a-z]+)$/";
-
-    if (!preg_match($namePattern, $name))
-    {
-      $error = 'Nom invalide';
-    }
-    else {
-      echo 'valide';
-    }
-
-    $cvc = $_POST['cvc'];
-    $cvcPattern = "/^[0-9]{3}$/";
-
-    if(!preg_match($cvcPattern, $cvc))
-    {
-      $error = "cvc invalide";
-    }
-    else{
-      echo 'cvc valide';
-    }
-
-    $number = $_POST['cardnumber'];
-
-    //$number="1738 2929 2828 4637"; //Valide
-    //$number="1738 F929 2828 4637"; //Faux
-    //$number="1738292928284637"; //Valide
-    //$number="FREN"; //Faux
-    //$number="1738-2929-2828-4637"; //Valide
-    //$number="1738/2929/2828/4637"; //Valide
-
-    $reg = '/^[0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}$/';
-
-    if ((preg_match($reg, $number)) || (preg_match('/^[0-9]+$/', $number))) {
-        $number=str_replace(array(' ', '-', '/'), '', $number);
-        $number=intval($number);
-
-        /* Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org *
-        * This code has been released into the public domain */
-        $number=preg_replace('/\D/', '', $number);
-
-        $number_length=strlen($number);
-        $parity=$number_length % 2;
-
-        $total=0;
-        for ($i=0; $i<$number_length; $i++) {
-            $digit=$number[$i];
-            if ($i % 2 == $parity) {
-                $digit*=2;
-                if ($digit > 9) {
-                    $digit-=9;
+            else {
+                //Check if expiration date isn't greater dans 3 years
+                if ($date > $max) {
+                    $error = "Carte valide plus de 3 ans";
+                } else {
+                    print("Valide");
                 }
             }
-        $total+=$digit;
         }
 
-        if ($total % 10 == 0) {
-            print("Valide");
+        $name = $_POST['nom'];
+        $namePattern = "/^([A-Z][a-z]+([-]{1}[A-Z][a-z]+||[A-Z][a-z]+)([ ]{1}||[ ]{1}de[ ]{1}||[ ]{1}d')[A-Z][a-z]+)$/";
+
+        if (!preg_match($namePattern, $name))
+        {
+        $error = 'Nom invalide';
+        }
+        else {
+        echo 'valide';
+        }
+
+        $cvc = $_POST['cvc'];
+        $cvcPattern = "/^[0-9]{3}$/";
+
+        if(!preg_match($cvcPattern, $cvc))
+        {
+        $error = "cvc invalide";
+        }
+        else{
+        echo 'cvc valide';
+        }
+
+        $number = $_POST['cardnumber'];
+        $reg = '/^[0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}$/';
+
+        if ((preg_match($reg, $number)) || (preg_match('/^[0-9]+$/', $number))) {
+            $number=str_replace(array(' ', '-', '/'), '', $number);
+            $number=intval($number);
+
+            /* Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org *
+            * This code has been released into the public domain */
+            $number=preg_replace('/\D/', '', $number);
+
+            $number_length=strlen($number);
+            $parity=$number_length % 2;
+
+            $total=0;
+            for ($i=0; $i<$number_length; $i++) {
+                $digit=$number[$i];
+                if ($i % 2 == $parity) {
+                    $digit*=2;
+                    if ($digit > 9) {
+                        $digit-=9;
+                    }
+                }
+            $total+=$digit;
+            }
+
+            if ($total % 10 == 0) {
+                print("Valide");
+            } else {
+                $error = "Carte non valide";
+            }
         } else {
-            $error = "Carte non valide";
+            $error = "Format carte de crédit invalide";
         }
-    } else {
-        $error = "Format carte de crédit invalide";
+
+        $data = ['subscription_type' => $subId, 'address' => $_POST['address'], 'payment_method' => $_POST['payment_method'], 'client_id' => $_POST['client_id'] ];
+
+        $response = $clientPayment->request('POST', '/invoice', ['headers' => ['Content-Type' => 'application/json'], 'body' => json_encode($data)]);
+        $body = get_object_vars(json_decode($response->getBody()));
+        if (!isset($error)) {
+            header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
+            exit();
+        }
     }
 
-    $data = ['subscription_type' => $subId, 'address' => $_POST['address'], 'payment_method' => $_POST['payment_method'], 'client_id' => $_POST['client_id'] ];
-
-    $response = $clientPayment->request('POST', '/invoice', ['headers' => ['Content-Type' => 'application/json'], 'body' => json_encode($data)]);
-    $body = get_object_vars(json_decode($response->getBody()));
-    if (!isset($error)) {
-        header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
-        exit();
+    try {
+        $response = $clientPayment->request('GET', "/subscription/$subId");
+        if($response->getStatusCode() == 200) {
+            $tabSub = json_decode($response->getBody(), true);
+        }
+    } catch (GuzzleHttp\Exception\ServerException $e) {
+        $error = "Attention, la page de paiement n'a pas pu chargé. Vous allez être redirigé dans un instant à la page de choix d'abonnement";
     }
-}
-
-try {
-    $response = $clientPayment->request('GET', "/subscription/$subId");
-    if($response->getStatusCode() == 200) {
-        $tabSub = json_decode($response->getBody(), true);
-    }
-} catch (GuzzleHttp\Exception\ServerException $e) {
-    $error = "Attention, la page de paiement n'a pas pu chargé. Vous allez être redirigé dans un instant à la page de choix d'abonnement";
-}
-
-
-
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -175,7 +159,7 @@ try {
         <div id="cardform">
             <label for="infos">Paiement avec carte bancaire</label>
             <div id="infoscarte">
-                <form action="" method="post">
+            <form action="" method="post">
                     <input type="hidden" name="payment_method" value="visa" />
                     <input type="hidden" name="client_id" value="1" />
                     <input type="hidden" name="address" value="Nice" />
@@ -184,18 +168,18 @@ try {
                     <div class="row">
                         <div class="col">
                             <label for="dateexp">Date d'expiration</label><br />
-                            <input type="text" name="dateexp" id="dateexp" placeholder="MM/AAAA" pattern="[0-9]*" inputmode="numeric" />
+                            <input type="text" name="dateexp" id="dateexp" placeholder="MM/AA" pattern="[0-9]{2}\/[0-9]{2}" inputmode="numeric" />
                         </div>
                         <div class="col">
                             <label for="cvc">CVC</label>
-                            <input type="text" name="cvc" id="cvc" placeholder="3 numéros au dos de la carte" required pattern="[0-9]*" inputmode="numeric" />
+                            <input type="text" name="cvc" id="cvc" placeholder="3 numéros au dos de la carte" required pattern="[0-9]{3}" inputmode="numeric" />
                         </div>
                     </div>
                     <label for="nom">Nom du titulaire de la carte</label>
                     <input type="text" name="nom" id="nom" maxlength="20" placeholder="Pierre Dupont" required />
-                    <!--maybe create a pattern to match only with letters and dash-->
                     <input type="submit" value="Payer" />
                 </form>
+
             </div>
         </div>
         <div id="paypalform">
@@ -214,5 +198,4 @@ try {
         </div>
     </div>
 </body>
-
 </html>

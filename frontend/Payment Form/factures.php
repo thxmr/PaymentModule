@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 
 $clientPayment = new Client([
     // Base URI, (url de l'API)
-    'base_uri' => 'http://152.228.163.113:3002/',
+    'base_uri' => 'localhost:3002',
     'timeout' => 2.0,
 ]);
 $clientClient = new Client([
@@ -45,7 +45,7 @@ $body = get_object_vars(json_decode($res->getBody()));
                 <div class="col" id="detailscol">
                     <p>Commande #<?php print_r($body['transaction_id']);?></p>
                     <hr/>
-                    <p>Paiement par <?php switch ($body['payment_method']){
+                    <p><?php switch ($body['payment_method']){
                                 case 1:
                                     echo "Carte Bleue";
                                     break;
