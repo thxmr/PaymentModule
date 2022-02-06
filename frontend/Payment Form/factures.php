@@ -48,12 +48,16 @@ $body = get_object_vars(json_decode($res->getBody()));
                     <p><?php switch ($body['payment_method']){
                                 case 1:
                                     echo "Carte Bleue";
+                                    break;
                                 case 2 :
                                     echo "Paypal";
+                                    break;
                                 case 3 :
                                     echo "Apple Pay";
+                                    break;
                                 default:
                                     echo "Méthode de paiement inconnue";
+                                    break;
                             }
                         ?></p>
                     <hr/>
