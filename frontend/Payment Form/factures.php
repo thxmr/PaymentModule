@@ -43,7 +43,7 @@ $body = get_object_vars(json_decode($res->getBody()));
                     <p><?php print_r($body['address']);?></p>
                 </div>
                 <div class="col" id="detailscol">
-                    <p>Commande #<?php print_r($body['transaction_id]');?></p>
+                    <p>Commande #<?php print_r($body['transaction_id']);?></p>
                     <hr/>
                     <p><?php switch ($body['payment_method']){
                                 case 1:
