@@ -15,7 +15,7 @@ $clientClient = new Client([
 
 $res = $clientPayment->request('GET', 'invoice/' . $_GET['transaction_id']);
 $body = get_object_vars(json_decode($res->getBody()));
-print_r($body);
+print_r($body[transaction_id);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
