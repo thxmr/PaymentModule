@@ -45,7 +45,7 @@ $body = get_object_vars(json_decode($res->getBody()));
                 <div class="col" id="detailscol">
                     <p>Commande #<?php print_r($body['transaction_id']);?></p>
                     <hr/>
-                    <p><?php switch ($body['payment_method']){
+                    <p>Paiement par <?php switch ($body['payment_method']){
                                 case 1:
                                     echo "Carte Bleue";
                                     break;
