@@ -20,12 +20,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $_POST['payment_method'] = 1;
     $date = $_POST['dateexp'];
 
-    //Tested on the 01/22
-    //$date = "01/22"; //Valide
-    //$date = "01/21"; //Faux
-    //$date = "12/21"; //Faux
-    //$date = "01/25"; //Valide
-
     //Check if month between 1-12 and format mm/yy
     if(!preg_match("/^(0[1-9]|1[012])\/[0-9]{2}$/", $date)) {
         $error = "Format date Invalide";
@@ -76,14 +70,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
     $number = $_POST['cardnumber'];
-
-    //$number="1738 2929 2828 4637"; //Valide
-    //$number="1738 F929 2828 4637"; //Faux
-    //$number="1738292928284637"; //Valide
-    //$number="FREN"; //Faux
-    //$number="1738-2929-2828-4637"; //Valide
-    //$number="1738/2929/2828/4637"; //Valide
-
     $reg = '/^[0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}[ -\/][0-9]{4}$/';
 
     if ((preg_match($reg, $number)) || (preg_match('/^[0-9]+$/', $number))) {
