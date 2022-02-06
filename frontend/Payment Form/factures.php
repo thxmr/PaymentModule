@@ -33,19 +33,19 @@ $body = get_object_vars(json_decode($res->getBody()));
                     <img src="img/validated.jpg" alt="valide" width=100 height=100/>
                     <p>Achat Terminé</p>
                     <hr/>
-                    <p>Abonnement n°XXX- <?php print_r($body[price]);?>€</p>
+                    <p>Abonnement n°44 - <?php print_r($body['price']);?>€</p>
                 </div>
             </div>
             <div class="row" id="detailsrow">
                 <div class="col" id="detailclient">
-                    <p><?php print_r($body[client_id]);?> <?php print_r($body[sub_name]);?></p>
+                    <p><?php print_r($body['client_id']);?> <?php print_r($body['sub_name']);?></p>
                     <hr/>
-                    <p><?php print_r($body[address]);?></p>
+                    <p><?php print_r($body['address']);?></p>
                 </div>
                 <div class="col" id="detailscol">
-                    <p>Commande #<?php print_r($body[transaction_id]);?></p>
+                    <p>Commande #<?php print_r($body['transaction_id]');?></p>
                     <hr/>
-                    <p><?php switch ($body[payment_method]){
+                    <p><?php switch ($body['payment_method']){
                                 case 1:
                                     echo "Carte Bleue";
                                 case 2 :
