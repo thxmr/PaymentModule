@@ -113,14 +113,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $body = get_object_vars(json_decode($response->getBody()));
     if (!isset($error)) {
 
-        $callToClientClient = $clientClient->request
-        (
+         $callToClientClient = $clientClient->request
+         (
             'POST',
             '/users/subscription', 
             [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'body' => json_encode([ "id" => $_GET['id'], "subscription" => "standard"])]
+                'headers' => ['Content-Type' => 'application/json'], 
+                'body' => json_encode([ "id" => $_GET['id'], "subscription" => "standard"])
             ]
         );
         header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
