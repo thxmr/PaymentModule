@@ -1,24 +1,27 @@
-<?php
-    require '../vendor/autoload.php';
+<?php 
+require '../vendor/autoload.php';
 
-    use GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
-    $clientPayment = new Client([
-        // Base URI, (url de l'API)
-        'base_uri' => 'localhost:3002',
-        'timeout' => 2.0,
-    ]);
-    $clientClient = new Client([
-        'base_uri' => 'localhost:3000',
-        'timeout' => 2.0
-    ]);
+$clientPayment = new Client([
+    // Base URI, (url de l'API)
+    'base_uri' => 'localhost:3002',
+    'timeout' => 2.0,
+]);
+$clientClient = new Client([
+    'base_uri' => 'localhost:3000',
+    'timeout' => 2.0
+]);
 
-    // Add the ClientModule API
+// Add the ClientModule API
+if(!isset($_GET['subscription_typ']))
+    $subId = 1;
+else
     $subId = $_GET['subscription_type'];
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $_POST['payment_method'] = 1;
-        $date = $_POST['dateexp'];
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $_POST['payment_method'] = 1;        
+    $date = $_POST['dateexp'];
 
         //Check if month between 1-12 and format mm/yy
         if(!preg_match("/^(0[1-9]|1[012])\/[0-9]{2}$/", $date)) {
@@ -103,25 +106,36 @@
         } else {
             $error = "Format carte de crédit invalide";
         }
-
+        
         $data = ['subscription_type' => $subId, 'address' => $_POST['address'], 'payment_method' => $_POST['payment_method'], 'client_id' => $_POST['client_id'] ];
 
-        $response = $clientPayment->request('POST', '/invoice', ['headers' => ['Content-Type' => 'application/json'], 'body' => json_encode($data)]);
-        $body = get_object_vars(json_decode($response->getBody()));
-        if (!isset($error)) {
-            header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
-            exit();
-        }
-    }
+    $response = $clientPayment->request('POST', '/invoice', ['headers' => ['Content-Type' => 'application/json'], 'body' => json_encode($data)]);
+    $body = get_object_vars(json_decode($response->getBody()));
+    if (!isset($error)) {
 
-    try {
-        $response = $clientPayment->request('GET', "/subscription/$subId");
-        if($response->getStatusCode() == 200) {
-            $tabSub = json_decode($response->getBody(), true);
-        }
-    } catch (GuzzleHttp\Exception\ServerException $e) {
-        $error = "Attention, la page de paiement n'a pas pu chargé. Vous allez être redirigé dans un instant à la page de choix d'abonnement";
+        $callToClientClient = $clientClient->request
+        (
+            'POST',
+            '/users/subscription', 
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'body' => json_encode([ "id" => $_GET['id'], "subscription" => "standard"])]
+            ]
+        );
+        header('Location: ./factures.php?transaction_id=' . $body['transaction_id']);
+        exit();
     }
+}
+
+try {
+    $response = $clientPayment->request('GET', "/subscription/$subId");
+    if($response->getStatusCode() == 200) {
+        $tabSub = json_decode($response->getBody(), true);
+    }
+} catch (GuzzleHttp\Exception\ServerException $e) {
+    $error = "Attention, la page de paiement n'a pas pu chargé. Vous allez être redirigé dans un instant à la page de choix d'abonnement";
+}
 ?>
 
 <!DOCTYPE html>
@@ -159,7 +173,7 @@
         <div id="cardform">
             <label for="infos">Paiement avec carte bancaire</label>
             <div id="infoscarte">
-            <form action="" method="post">
+                <form action="" method="post">
                     <input type="hidden" name="payment_method" value="visa" />
                     <input type="hidden" name="client_id" value="1" />
                     <input type="hidden" name="address" value="Nice" />
