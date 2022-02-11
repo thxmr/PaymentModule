@@ -242,3 +242,7 @@ Open the VSC Command Palette with Ctrl + Shift + P and enter :
     PHPUnit Test Directory
 
 All 30 assertions tests should pass.
+
+In case PHPUnit doesn't work because it's still not installed, please the following command in the `frontend` where `composer.json` is located :
+
+    composer require --dev phpunit/phpunit ^9.5
